@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:phicos_mart/models/product.dart';
+import 'package:phicos_mart/providers/product.dart';
 import 'package:phicos_mart/widgets/product_item.dart';
 import 'package:provider/provider.dart';
-import '../providers/products_provider.dart';
+import '../providers/products_list_provider.dart';
 
 class ProductsGrid extends StatelessWidget {
   @override
@@ -15,10 +15,13 @@ class ProductsGrid extends StatelessWidget {
           childAspectRatio: 3 / 2,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10),
-      itemBuilder: (ctx, index) => ProductItem(
-        title: products[index].title,
-        imageUrl: products[index].imageUrl,
-        id: products[index].id,
+      itemBuilder: (ctx, index) => ChangeNotifierProvider(
+        create: (ct) => products[index],
+        child: ProductItem(
+//          title: products[index].title,
+//          imageUrl: products[index].imageUrl,
+//          id: products[index].id,
+            ),
       ),
       padding: const EdgeInsets.all(10),
       itemCount: products.length,

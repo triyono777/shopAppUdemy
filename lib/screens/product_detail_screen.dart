@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phicos_mart/providers/products_provider.dart';
+import 'package:phicos_mart/providers/products_list_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
