@@ -17,16 +17,32 @@ class CartItem {
 class Cart with ChangeNotifier {
   Map<String, CartItem> _items;
 
-  Map<String, CartItem> get items{
-    return {..._items}
-}
+  Map<String, CartItem> get items {
+    return {..._items};
+  }
 
-void addItem(String productId, double price, String title){
-    if (_items.containsKey(productId)){
+  void addItem(String productId, double price, String title) {
+    if (_items.containsKey(productId)) {
       // change quantittyy
-      _items.update(productId , (existingCartItem)=> CartItem(id:existingCartItem.id,title: existingCartItem.title,price: existingCartItem.price,quantity: existingCartItem.quantity+1, ),);
-    }else{
-      _items.putIfAbsent(productId, ()=> CartItem(id: DateTime.now().toString(), title: title,price: price,quantity: 1,),);
+      _items.update(
+        productId,
+        (existingCartItem) => CartItem(
+          id: existingCartItem.id,
+          title: existingCartItem.title,
+          price: existingCartItem.price,
+          quantity: existingCartItem.quantity + 1,
+        ),
+      );
+    } else {
+      _items.putIfAbsent(
+        productId,
+        () => CartItem(
+          id: DateTime.now().toString(),
+          title: title,
+          price: price,
+          quantity: 1,
+        ),
+      );
     }
-}
+  }
 }
