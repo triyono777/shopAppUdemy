@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/cart.dart';
+import 'package:phicos_mart/screens/cart_screen.dart';
 import 'package:phicos_mart/widgets/Products_grid.dart';
 import 'package:provider/provider.dart';
-import '../providers/products_list_provider.dart';
+//import '../providers/products_list_provider.dart';
 import '../widgets/badge.dart';
 
 enum FilterOptions {
@@ -52,7 +53,9 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             ),
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(CartScreen.routeName);
+              },
             ),
           )
         ],
