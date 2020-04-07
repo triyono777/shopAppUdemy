@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
 
 //      create: (ctx) => ProductsListProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.purple,
