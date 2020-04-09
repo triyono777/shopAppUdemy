@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/cart.dart';
 
 class CartItem extends StatelessWidget {
   final String id;
+  final String productId;
   final String title;
   final double price;
   final int quantity;
 
-  const CartItem({Key key, this.id, this.title, this.price, this.quantity})
+  const CartItem(
+      {Key key, this.id, this.title, this.price, this.quantity, this.productId})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,9 @@ class CartItem extends StatelessWidget {
         padding: EdgeInsets.all(20),
       ),
       direction: DismissDirection.endToStart,
-      onDismissed: (direction) {},
+      onDismissed: (direction) {
+        Provider.of<Cart>(context, listen: false).removeItem(productId);
+      },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
