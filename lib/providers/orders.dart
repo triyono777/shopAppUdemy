@@ -32,7 +32,6 @@ class Orders with ChangeNotifier {
           products: cartProducts,
           dateTime: DateTime.now()),
     );
-
     notifyListeners();
   }
 }
