@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/orders.dart';
 import 'package:provider/provider.dart';
 
-class Ordersceen extends StatelessWidget {
+class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderData = Provider.of<Orders>(context);
