@@ -22,4 +22,17 @@ class Orders with ChangeNotifier {
     // ignore: sdk_version_ui_as_code
     return [..._orders];
   }
+
+  void addOrders(List<CartItem> cartProducts, double total) {
+    _orders.insert(
+      0,
+      OrderItem(
+          id: DateTime.now().toString(),
+          amount: total,
+          products: cartProducts,
+          dateTime: DateTime.now()),
+    );
+
+    notifyListeners();
+  }
 }
