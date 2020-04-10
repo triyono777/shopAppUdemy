@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/cart.dart';
 import 'package:phicos_mart/screens/cart_screen.dart';
 import 'package:phicos_mart/widgets/Products_grid.dart';
+import 'package:phicos_mart/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
 //import '../providers/products_list_provider.dart';
 import '../widgets/badge.dart';
@@ -60,6 +61,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           )
         ],
       ),
+      drawer: AppDrawer(),
       body: ProductsGrid(
         showfavs: _showOnlyFavorites,
       ),
