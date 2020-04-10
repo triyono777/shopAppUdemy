@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:phicos_mart/providers/orders.dart';
+import 'package:phicos_mart/providers/orders.dart' show Orders;
 import 'package:provider/provider.dart';
+import '../widgets/order_item.dart';
 
 class OrderScreen extends StatelessWidget {
   @override
@@ -13,7 +14,9 @@ class OrderScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         itemCount: orderData.orders.length,
-        itemBuilder: (ctx, i) => Card(),
+        itemBuilder: (ctx, i) => OrderItem(
+          order: orderData.orders[i],
+        ),
       ),
     );
   }
