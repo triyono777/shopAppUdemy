@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/cart.dart';
+import 'package:phicos_mart/providers/orders.dart';
 import 'package:phicos_mart/screens/cart_screen.dart';
 import 'package:phicos_mart/screens/product_detail_screen.dart';
 import 'package:phicos_mart/screens/product_overview_screen.dart';
@@ -19,6 +20,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Orders(),
         ),
       ],
 
