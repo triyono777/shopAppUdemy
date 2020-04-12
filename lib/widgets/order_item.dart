@@ -1,11 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/orders.dart' as ordr;
 import 'package:intl/intl.dart';
 
-class OrderItem extends StatelessWidget {
+class OrderItem extends StatefulWidget {
   final ordr.OrderItem order;
 
   const OrderItem({Key key, this.order}) : super(key: key);
+
+  @override
+  _OrderItemState createState() => _OrderItemState();
+}
+
+class _OrderItemState extends State<OrderItem> {
+  bool _expanded = false;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -13,12 +22,19 @@ class OrderItem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           ListTile(
-            title: Text('\$${order.amount}'),
+            title: Text('\$${widget.order.amount}'),
             subtitle: Text(
-              DateFormat('dd MM yyyy hh:mm').format(order.dateTime),
+              DateFormat('dd MM yyyy hh:mm').format(widget.order.dateTime),
             ),
-            trailing:
-                IconButton(icon: Icon(Icons.expand_more), onPressed: () {}),
+            trailing: IconButton(
+                icon: _expanded
+                    ? Icon(Icons.expand_less)
+                    : Icon(Icons.expand_more),
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                }),
           ),
         ],
       ),
