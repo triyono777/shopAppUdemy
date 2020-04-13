@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:phicos_mart/providers/orders.dart' as ordr;
 import 'package:intl/intl.dart';
 
@@ -36,6 +37,30 @@ class _OrderItemState extends State<OrderItem> {
                   });
                 }),
           ),
+          if (_expanded)
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
+              height: min(widget.order.products.length * 20.0 + 10, 100),
+              child: ListView(
+                children: widget.order.products
+                    .map((prod) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              prod.title,
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              '${prod.quantity} x \$${prod.price}',
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey),
+                            )
+                          ],
+                        ))
+                    .toList(),
+              ),
+            ),
         ],
       ),
     );
