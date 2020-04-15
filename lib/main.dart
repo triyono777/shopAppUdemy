@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/cart.dart';
 import 'package:phicos_mart/providers/orders.dart';
 import 'package:phicos_mart/screens/cart_screen.dart';
+import 'package:phicos_mart/screens/edit_product_screen.dart';
 import 'package:phicos_mart/screens/orders_screen.dart';
 import 'package:phicos_mart/screens/product_detail_screen.dart';
 import 'package:phicos_mart/screens/product_overview_screen.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
           CartScreen.routeName: (ctx) => CartScreen(),
           OrderScreen.routeName: (ctx) => OrderScreen(),
           UserProductsScreen.routeName: (ctx) => UserProductsScreen(),
+          EditProductScreen.routeName: (ctx) => EditProductScreen(),
         },
       ),
     );
