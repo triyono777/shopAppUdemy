@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phicos_mart/widgets/app_drawer.dart';
 import 'package:phicos_mart/widgets/user_product_item.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,7 @@ class UserProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<ProductsListProvider>(context);
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: const Text('Your Products'),
         actions: <Widget>[
@@ -24,9 +26,14 @@ class UserProductsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
-          itemBuilder: (_, index) => UserProductItem(
-            title: productsData.items[index].title,
-            imageUrl: productsData.items[index].imageUrl,
+          itemBuilder: (_, index) => Column(
+            children: <Widget>[
+              UserProductItem(
+                title: productsData.items[index].title,
+                imageUrl: productsData.items[index].imageUrl,
+              ),
+              Divider(),
+            ],
           ),
           itemCount: productsData.items.length,
         ),
