@@ -15,6 +15,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
+  var _isInit = true;
   var _editedProduct = Product(
     id: null,
     price: 0,
@@ -26,7 +27,19 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void initState() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
+
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final productId = ModalRoute.of(context).settings.arguments as String;
+      _editedProduct = Provider.of<ProductsListProvider>(context, listen: false)
+          .findById(productId);
+    }
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
