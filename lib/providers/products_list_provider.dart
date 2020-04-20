@@ -73,7 +73,7 @@ class ProductsListProvider with ChangeNotifier {
         price: product.price,
         id: DateTime.now().toString());
 //    _items.add(value);
-    _items.add(newProduc);
+//    _items.add(newProduc);
     _items.insert(0, newProduc);
     notifyListeners();
   }
