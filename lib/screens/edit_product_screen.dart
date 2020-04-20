@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/providers/product.dart';
+import 'package:provider/provider.dart';
+import '../providers/products_list_provider.dart';
 
 class EditProductScreen extends StatefulWidget {
   static const routeName = '/edit-product';
@@ -40,7 +42,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
-      setState(() {});
+      if ((!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
+      return null;
     }
   }
 
@@ -50,10 +59,9 @@ class _EditProductScreenState extends State<EditProductScreen> {
       return;
     }
     _form.currentState.save();
-    print(_editedProduct.title);
-    print(_editedProduct.description);
-    print(_editedProduct.imageUrl);
-    print(_editedProduct.price);
+    Provider.of<ProductsListProvider>(context, listen: false)
+        .addProduct(_editedProduct);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -97,6 +105,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return 'Silahan masukkan isian';
+                  }
+                  if (double.tryParse(val) == null) {
+                    return 'please enter valid number';
+                  }
+                  if (double.parse(val) <= 0) {
+                    return 'tidak boleh nol';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -115,6 +135,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return 'Silahan masukkan isian';
+                  }
+                  if (val.length < 10) {
+                    return 'karakter minimal 10 huruf';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Desciprtion'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -150,6 +179,21 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return 'Silahan masukkan isian';
+                        }
+                        if (!val.startsWith('http') &&
+                            !val.startsWith('https')) {
+                          return 'silahkan masukkan url image';
+                        }
+                        if (!val.endsWith('.png') &&
+                            !val.endsWith('.jpg') &&
+                            !val.endsWith('.jpeg')) {
+                          return 'silahkan masukkan link gambar';
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(labelText: "Image URL "),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
