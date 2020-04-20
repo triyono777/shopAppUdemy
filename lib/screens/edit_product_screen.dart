@@ -40,6 +40,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   void _updateImageUrl() {
     if (!_imageUrlFocusNode.hasFocus) {
+      if ((!_imageUrlController.text.startsWith('http') &&
+              !_imageUrlController.text.startsWith('https')) ||
+          (!_imageUrlController.text.endsWith('.png') &&
+              !_imageUrlController.text.endsWith('.jpg') &&
+              !_imageUrlController.text.endsWith('.jpeg'))) {
+        return;
+      }
+      return null;
       setState(() {});
     }
   }
@@ -178,6 +186,11 @@ class _EditProductScreenState extends State<EditProductScreen> {
                         if (!val.startsWith('http') &&
                             !val.startsWith('https')) {
                           return 'silahkan masukkan url image';
+                        }
+                        if (!val.endsWith('.png') &&
+                            !val.endsWith('.jpg') &&
+                            !val.endsWith('.jpeg')) {
+                          return 'silahkan masukkan link gambar';
                         }
                         return null;
                       },
