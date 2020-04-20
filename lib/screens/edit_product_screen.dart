@@ -41,14 +41,17 @@ class _EditProductScreenState extends State<EditProductScreen> {
   void didChangeDependencies() {
     if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
-      _editedProduct = Provider.of<ProductsListProvider>(context, listen: false)
-          .findById(productId);
-      _initValue = {
-        'title': _editedProduct.title,
-        'description': _editedProduct.description,
-        'price': _editedProduct.price.toString(),
-        'imageUrl': _editedProduct.imageUrl,
-      };
+      if (productId != null) {
+        _editedProduct =
+            Provider.of<ProductsListProvider>(context, listen: false)
+                .findById(productId);
+        _initValue = {
+          'title': _editedProduct.title,
+          'description': _editedProduct.description,
+          'price': _editedProduct.price.toString(),
+          'imageUrl': _editedProduct.imageUrl,
+        };
+      }
     }
     _isInit = false;
     super.didChangeDependencies();
@@ -108,6 +111,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           child: ListView(
             children: <Widget>[
               TextFormField(
+                initialValue: _initValue['title'],
                 validator: (val) {
                   if (val.isEmpty) {
                     return 'Silahan masukkan isian';
@@ -130,6 +134,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValue['price'],
                 validator: (val) {
                   if (val.isEmpty) {
                     return 'Silahan masukkan isian';
@@ -160,6 +165,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                initialValue: _initValue['description'],
                 validator: (val) {
                   if (val.isEmpty) {
                     return 'Silahan masukkan isian';
@@ -169,7 +175,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   }
                   return null;
                 },
-                decoration: InputDecoration(labelText: 'Desciprtion'),
+                decoration: InputDecoration(labelText: 'Description'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
                 focusNode: _descriptionFocusNode,
@@ -204,6 +210,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      initialValue: _initValue['imageUrl'],
                       validator: (val) {
                         if (val.isEmpty) {
                           return 'Silahan masukkan isian';
