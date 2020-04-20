@@ -97,6 +97,18 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return 'Silahan masukkan isian';
+                  }
+                  if (double.tryParse(val) == null) {
+                    return 'please enter valid number';
+                  }
+                  if (double.parse(val) <= 0) {
+                    return 'tidak boleh nol';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Price'),
                 textInputAction: TextInputAction.next,
                 keyboardType: TextInputType.number,
@@ -115,6 +127,15 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 },
               ),
               TextFormField(
+                validator: (val) {
+                  if (val.isEmpty) {
+                    return 'Silahan masukkan isian';
+                  }
+                  if (val.length < 10) {
+                    return 'karakter minimal 10 huruf';
+                  }
+                  return null;
+                },
                 decoration: InputDecoration(labelText: 'Desciprtion'),
                 maxLines: 3,
                 keyboardType: TextInputType.multiline,
@@ -150,6 +171,16 @@ class _EditProductScreenState extends State<EditProductScreen> {
                   ),
                   Expanded(
                     child: TextFormField(
+                      validator: (val) {
+                        if (val.isEmpty) {
+                          return 'Silahan masukkan isian';
+                        }
+                        if (!val.startsWith('http') &&
+                            !val.startsWith('https')) {
+                          return 'silahkan masukkan url image';
+                        }
+                        return null;
+                      },
                       decoration: InputDecoration(labelText: "Image URL "),
                       keyboardType: TextInputType.url,
                       textInputAction: TextInputAction.done,
