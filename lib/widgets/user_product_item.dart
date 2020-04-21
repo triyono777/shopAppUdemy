@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:phicos_mart/screens/edit_product_screen.dart';
 
 class UserProductItem extends StatelessWidget {
+  final String id;
   final String title;
   final String imageUrl;
 
-  const UserProductItem({Key key, this.title, this.imageUrl}) : super(key: key);
+  const UserProductItem({Key key, this.title, this.imageUrl, this.id})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -18,7 +21,10 @@ class UserProductItem extends StatelessWidget {
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.edit),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(EditProductScreen.routeName, arguments: id);
+              },
               color: Theme.of(context).primaryColor,
             ),
             IconButton(
