@@ -90,6 +90,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     _form.currentState.save();
     if (_editedProduct.id != null) {
+      Provider.of<ProductsListProvider>(context, listen: false)
+          .updateProduct(_editedProduct.id, _editedProduct);
     } else {
       Provider.of<ProductsListProvider>(context, listen: false)
           .addProduct(_editedProduct);
@@ -135,7 +137,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
                     description: _editedProduct.description,
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
               ),
@@ -166,7 +169,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: double.parse(val),
                     imageUrl: _editedProduct.imageUrl,
                     description: _editedProduct.description,
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
               ),
@@ -191,7 +195,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     price: _editedProduct.price,
                     imageUrl: _editedProduct.imageUrl,
                     description: val,
-                    id: null,
+                    id: _editedProduct.id,
+                    isFavorite: _editedProduct.isFavorite,
                   );
                 },
               ),
@@ -246,7 +251,8 @@ class _EditProductScreenState extends State<EditProductScreen> {
                           price: _editedProduct.price,
                           imageUrl: val,
                           description: _editedProduct.description,
-                          id: null,
+                          id: _editedProduct.id,
+                          isFavorite: _editedProduct.isFavorite,
                         );
                       },
                     ),
