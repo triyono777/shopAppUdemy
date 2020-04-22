@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/screens/edit_product_screen.dart';
+import 'package:provider/provider.dart';
+import '../providers/products_list_provider.dart';
 
 class UserProductItem extends StatelessWidget {
   final String id;
   final String title;
   final String imageUrl;
 
-  const UserProductItem({Key key, this.title, this.imageUrl, this.id})
-      : super(key: key);
+  const UserProductItem({
+    Key key,
+    this.title,
+    this.imageUrl,
+    this.id,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -29,7 +35,10 @@ class UserProductItem extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.delete),
-              onPressed: () {},
+              onPressed: () {
+                Provider.of<ProductsListProvider>(context, listen: false)
+                    .deleteProduct(id);
+              },
               color: Theme.of(context).errorColor,
             ),
           ],
