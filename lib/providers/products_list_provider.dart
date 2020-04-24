@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'product.dart';
+import 'package:http/http.dart' as http;
 
 class ProductsListProvider with ChangeNotifier {
   List<Product> _items = [
@@ -66,6 +69,15 @@ class ProductsListProvider with ChangeNotifier {
 //  }
 
   void addProduct(Product product) {
+    const url = '';
+    http.post(url,
+        body: jsonEncode({
+          'title': product.title,
+          'description': product.description,
+          'imageUrl': product.imageUrl,
+          'price': product.price,
+          'isFavorite': product.isFavorite,
+        }));
     final newProduc = Product(
         title: product.title,
         description: product.description,
