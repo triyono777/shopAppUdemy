@@ -70,24 +70,29 @@ class ProductsListProvider with ChangeNotifier {
 
   void addProduct(Product product) {
     const url = 'https://scannen-apps.firebaseio.com/phicosmart/produts.json';
-    http.post(url,
-        body: jsonEncode({
-          'title': product.title,
-          'description': product.description,
-          'imageUrl': product.imageUrl,
-          'price': product.price,
-          'isFavorite': product.isFavorite,
-        }));
-    final newProduc = Product(
+    http
+        .post(url,
+            body: jsonEncode({
+              'title': product.title,
+              'description': product.description,
+              'imageUrl': product.imageUrl,
+              'price': product.price,
+              'isFavorite': product.isFavorite,
+            }))
+        .then((response) {
+      print(jsonDecode(response.body));
+      final newProduc = Product(
         title: product.title,
         description: product.description,
         imageUrl: product.imageUrl,
         price: product.price,
-        id: DateTime.now().toString());
+        id: jsonDecode(response.body)['nama'],
+      );
 //    _items.add(value);
 //    _items.add(newProduc);
-    _items.insert(0, newProduc);
-    notifyListeners();
+      _items.insert(0, newProduc);
+      notifyListeners();
+    });
   }
 
   void updateProduct(String id, Product newProduct) {
