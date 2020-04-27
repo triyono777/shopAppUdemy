@@ -68,9 +68,9 @@ class ProductsListProvider with ChangeNotifier {
 //    notifyListeners();
 //  }
 
-  void addProduct(Product product) {
+  Future<void> addProduct(Product product) {
     const url = 'https://scannen-apps.firebaseio.com/phicosmart/produts.json';
-    http
+    return http
         .post(url,
             body: jsonEncode({
               'title': product.title,
