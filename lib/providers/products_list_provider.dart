@@ -69,6 +69,7 @@ class ProductsListProvider with ChangeNotifier {
 //  }
 
   Future<void> addProduct(Product product) {
+    // todo: ini di errorkan
     const url = 'https://scannen-apps.firebaseio.com/phicosmart/produts.json';
     return http
         .post(url,
@@ -81,7 +82,7 @@ class ProductsListProvider with ChangeNotifier {
             }))
         .then((response) {
       print(jsonDecode(response.body));
-      final newProduc = Product(
+      final newProduct = Product(
         title: product.title,
         description: product.description,
         imageUrl: product.imageUrl,
@@ -90,8 +91,11 @@ class ProductsListProvider with ChangeNotifier {
       );
 //    _items.add(value);
 //    _items.add(newProduc);
-      _items.insert(0, newProduc);
+      _items.insert(0, newProduct);
       notifyListeners();
+    }).catchError((error) {
+      print(error);
+      throw error;
     });
   }
 
