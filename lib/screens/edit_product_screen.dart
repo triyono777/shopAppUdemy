@@ -24,7 +24,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
     imageUrl: '',
   );
   var _isInit = true;
-  var _isloading = false;
+  var _isLoading = false;
   var _initValue = {
     'title': '',
     'description': '',
@@ -34,7 +34,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
   @override
   void initState() {
     _imageUrlFocusNode.addListener(_updateImageUrl);
-
     super.initState();
   }
 
@@ -80,7 +79,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               !_imageUrlController.text.endsWith('.jpeg'))) {
         return;
       }
-      return null;
+      setState(() {});
     }
   }
 
@@ -91,14 +90,14 @@ class _EditProductScreenState extends State<EditProductScreen> {
     }
     _form.currentState.save();
     setState(() {
-      _isloading = true;
+      _isLoading = true;
     });
 
     if (_editedProduct.id != null) {
       Provider.of<ProductsListProvider>(context, listen: false)
           .updateProduct(_editedProduct.id, _editedProduct);
       setState(() {
-        _isloading = false;
+        _isLoading = false;
       });
       Navigator.of(context).pop();
     } else {
@@ -106,7 +105,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           .addProduct(_editedProduct)
           .then((_) {
         setState(() {
-          _isloading = false;
+          _isLoading = false;
         });
         Navigator.of(context).pop();
       });
@@ -127,7 +126,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
           ),
         ],
       ),
-      body: _isloading
+      body: _isLoading
           ? Center(
               child: CircularProgressIndicator(),
             )
