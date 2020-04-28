@@ -70,7 +70,7 @@ class ProductsListProvider with ChangeNotifier {
 
   Future<void> addProduct(Product product) {
     // todo: ini di errorkan
-    const url = 'https://scannen-apps.firebaseio.com/phicosmart/produts.json';
+    const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
     return http
         .post(url,
             body: jsonEncode({
