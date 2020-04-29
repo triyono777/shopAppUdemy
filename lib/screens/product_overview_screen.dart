@@ -22,9 +22,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
 
   @override
   void initState() {
-    Provider.of<ProductsListProvider>(context, listen: false)
-        .fetchAndSetProducts();
-
+//    Provider.of<ProductsListProvider>(context, listen: false)
+//        .fetchAndSetProducts();
+    Future.delayed(Duration.zero).then((_) {
+      Provider.of<ProductsListProvider>(context).fetchAndSetProducts();
+    });
     super.initState();
   }
 
