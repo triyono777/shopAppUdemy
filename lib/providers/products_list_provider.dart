@@ -67,6 +67,15 @@ class ProductsListProvider with ChangeNotifier {
 //    _showFavoritesOnly = false;
 //    notifyListeners();
 //  }
+  Future<void> fetchAndSetProducts() async {
+    const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
+    try {
+      final response = await http.get(url);
+      print(response.body);
+    } catch (error) {
+      throw (error);
+    }
+  }
 
   Future<void> addProduct(Product product) {
     // todo: ini di errorkan

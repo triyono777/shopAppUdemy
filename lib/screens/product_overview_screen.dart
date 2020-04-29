@@ -4,7 +4,7 @@ import 'package:phicos_mart/screens/cart_screen.dart';
 import 'package:phicos_mart/widgets/Products_grid.dart';
 import 'package:phicos_mart/widgets/app_drawer.dart';
 import 'package:provider/provider.dart';
-//import '../providers/products_list_provider.dart';
+import '../providers/products_list_provider.dart';
 import '../widgets/badge.dart';
 
 enum FilterOptions {
@@ -19,6 +19,15 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavorites = false;
+
+  @override
+  void initState() {
+    Provider.of<ProductsListProvider>(context, listen: false)
+        .fetchAndSetProducts();
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
