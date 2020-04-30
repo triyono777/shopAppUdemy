@@ -71,7 +71,7 @@ class ProductsListProvider with ChangeNotifier {
     const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
     try {
       final response = await http.get(url);
-      print(response.body);
+      final extractedData = jsonDecode(response.body);
     } catch (error) {
       throw (error);
     }
