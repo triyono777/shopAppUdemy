@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:phicos_mart/models/http_exception.dart';
 import 'product.dart';
 import 'package:http/http.dart' as http;
 
@@ -143,13 +144,15 @@ class ProductsListProvider with ChangeNotifier {
   }
 
   void deleteProduct(String id) {
-    final url =
-        'https://scannen-apps.firebaseio.com/phicosmart/products/$id.json';
+    final url = 'https://scannen-apps.firebaseio.com/phicosmart/products/$id';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
     notifyListeners();
-    http.delete(url).then((_) {
+    http.delete(url).then((response) {
+      if (response.statusCode >= 400) {
+        throw HttpException('Tidak dapat menhhapus product');
+      }
       existingProduct = null;
     }).catchError((_) {
       _items.insert(existingProductIndex, existingProduct);
