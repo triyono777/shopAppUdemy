@@ -143,20 +143,19 @@ class ProductsListProvider with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
-    final url = 'https://scannen-apps.firebaseio.com/phicosmart/products/$id';
+  Future<void> deleteProduct(String id) async {
+    final url =
+        'https://scannen-apps.firebaseio.com/phicosmart/products/$id.json';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
     _items.removeAt(existingProductIndex);
     notifyListeners();
-    http.delete(url).then((response) {
-      if (response.statusCode >= 400) {
-        throw HttpException('Tidak dapat menhhapus product');
-      }
-      existingProduct = null;
-    }).catchError((_) {
+    final response = await http.delete(url);
+    if (response.statusCode >= 400) {
       _items.insert(existingProductIndex, existingProduct);
       notifyListeners();
-    });
+      throw HttpException('Tidak dapat menhhapus product');
+    }
+    existingProduct = null;
   }
 }
