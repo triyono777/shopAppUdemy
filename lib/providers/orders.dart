@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart' as http;
 import 'package:phicos_mart/providers/cart.dart';
+import 'dart:convert';
 
 class OrderItem {
   final String id;
@@ -23,11 +25,28 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
-  void addOrders(List<CartItem> cartProducts, double total) {
+  Future<void> addOrders(List<CartItem> cartProducts, double total) async {
+    const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
+    final timestamp = DateTime.now();
+    final response = await http.post(
+      url,
+      body: json.encode({
+        'amount': total,
+        'datetime': timestamp.toIso8601String(),
+        'products': cartProducts
+            .map((cp) => {
+                  'id': cp.id,
+                  'title': cp.title,
+                  'quantity': cp.quantity,
+                  'price': cp.price,
+                })
+            .toList(),
+      }),
+    );
     _orders.insert(
       0,
       OrderItem(
-          id: DateTime.now().toString(),
+          id: json.decode(response.body)['nama'],
           amount: total,
           products: cartProducts,
           dateTime: DateTime.now()),
