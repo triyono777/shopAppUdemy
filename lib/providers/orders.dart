@@ -28,7 +28,31 @@ class Orders with ChangeNotifier {
   Future<void> fetchAndSetOrders() async {
     const url = 'https://scannen-apps.firebaseio.com/phicosmart/orders.json';
     final response = await http.get(url);
-    print(json.decode(response.body));
+    final List<OrderItem> loadedOrders = [];
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+    if (extractedData == null) {
+      return;
+    }
+    extractedData.forEach((orderId, orderData) {
+      loadedOrders.add(
+        OrderItem(
+          id: orderId,
+          amount: orderData['amount'],
+          products: (orderData['products'] as List<dynamic>)
+              .map(
+                (item) => CartItem(
+                    id: item['id'],
+                    title: item['title'],
+                    quantity: item['quantity'],
+                    price: item['price']),
+              )
+              .toList(),
+          dateTime: DateTime.parse(orderData['datetime']),
+        ),
+      );
+    });
+    _orders = loadedOrders;
+    notifyListeners();
   }
 
   Future<void> addOrders(List<CartItem> cartProducts, double total) async {
