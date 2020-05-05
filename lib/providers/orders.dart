@@ -25,8 +25,14 @@ class Orders with ChangeNotifier {
     return [..._orders];
   }
 
+  Future<void> fetchAndSetOrders() async {
+    const url = 'https://scannen-apps.firebaseio.com/phicosmart/orders.json';
+    final response = await http.get(url);
+    print(json.decode(response.body));
+  }
+
   Future<void> addOrders(List<CartItem> cartProducts, double total) async {
-    const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
+    const url = 'https://scannen-apps.firebaseio.com/phicosmart/orders.json';
     final timestamp = DateTime.now();
     final response = await http.post(
       url,
