@@ -15,16 +15,13 @@ class _OrderScreenState extends State<OrderScreen> {
   var _isLoading = false;
   @override
   void initState() {
-//    Future.delayed(Duration.zero).then((_) async {
-
-    _isLoading = true;
-    Provider.of<Orders>(context, listen: false).fetchAndSetOrders().then((_) {
-      setState(() {
-        _isLoading = false;
-      });
-    });
-
+//    _isLoading = true;
+//    Provider.of<Orders>(context, listen: false).fetchAndSetOrders().then((_) {
+//      setState(() {
+//        _isLoading = false;
+//      });
 //    });
+
     super.initState();
   }
 
