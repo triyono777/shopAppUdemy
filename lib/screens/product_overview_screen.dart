@@ -50,10 +50,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           .then((_) {
         setState(() {
           _isLoading = false;
+          _isInit = false;
         });
       });
     }
-    _isInit = false;
+
     super.didChangeDependencies();
   }
 
