@@ -10,6 +10,7 @@ import 'package:phicos_mart/widgets/user_product_item.dart';
 import 'package:provider/provider.dart';
 import './providers/products_list_provider.dart';
 import './screens/user_products_screen.dart';
+import './screens/auth_screen.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
           accentColor: Colors.deepOrange,
           fontFamily: 'Lato',
         ),
-        home: ProductOverviewScreen(),
+        home: AuthScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
           CartScreen.routeName: (ctx) => CartScreen(),
