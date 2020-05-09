@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phicos_mart/providers/auth.dart';
 import 'package:phicos_mart/providers/cart.dart';
 import 'package:phicos_mart/providers/orders.dart';
 import 'package:phicos_mart/screens/cart_screen.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider.value(
+          value: Auth(),
+        ),
         ChangeNotifierProvider.value(
           value: ProductsListProvider(),
         ),
