@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:phicos_mart/models/http_exception.dart';
 import 'package:phicos_mart/providers/auth.dart';
 import 'package:provider/provider.dart';
 
@@ -111,16 +112,35 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isLoading = true;
     });
-    if (_authMode == AuthMode.Login) {
-      // Log user in
-      await Provider.of<Auth>(context, listen: false)
-          .login(_authData['email'], _authData['password']);
-    } else {
-      // Sign user up
-      await Provider.of<Auth>(context, listen: false).signup(
-        _authData['email'],
-        _authData['password'],
-      );
+    try {
+      if (_authMode == AuthMode.Login) {
+        // Log user in
+        await Provider.of<Auth>(context, listen: false)
+            .login(_authData['email'], _authData['password']);
+      } else {
+        // Sign user up
+        await Provider.of<Auth>(context, listen: false).signup(
+          _authData['email'],
+          _authData['password'],
+        );
+      }
+    } on HttpException catch (error) {
+      var errorMessage = 'autentikasi gagal';
+
+      if (error.toString().contains('EMAIL_EXISTS')) {
+        errorMessage = 'email sudah digunakan';
+      } else if (error.toString().contains('INVALID_EMAIL')) {
+        errorMessage = 'email tidak valid';
+      } else if (error.toString().contains('WEAK_PASSWORD')) {
+        errorMessage = 'password lemah';
+      } else if (error.toString().contains('EMAIIL_NOT_FOUND')) {
+        errorMessage = 'email tidak ditemukan';
+      } else if (error.toString().contains('INVALID_PASSWORD')) {
+        errorMessage = 'password tidak valid';
+      }
+    } catch (error) {
+      const errorMessage =
+          'Tidak dapat me autentikasi anda, silahkan coba lagi';
     }
     setState(() {
       _isLoading = false;
