@@ -102,6 +102,21 @@ class _AuthCardState extends State<AuthCard> {
   };
   var _isLoading = false;
   final _passwordController = TextEditingController();
+  void _showErrorDialog(String message) {
+    showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+              title: Text(' ada error'),
+              content: Text(message),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                    },
+                    child: Text('Ok'))
+              ],
+            ));
+  }
 
   Future<void> _submit() async {
     if (!_formKey.currentState.validate()) {
@@ -138,9 +153,11 @@ class _AuthCardState extends State<AuthCard> {
       } else if (error.toString().contains('INVALID_PASSWORD')) {
         errorMessage = 'password tidak valid';
       }
+      _showErrorDialog(errorMessage);
     } catch (error) {
       const errorMessage =
           'Tidak dapat me autentikasi anda, silahkan coba lagi';
+      _showErrorDialog(errorMessage);
     }
     setState(() {
       _isLoading = false;
