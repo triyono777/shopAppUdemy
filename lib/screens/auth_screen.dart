@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/models/http_exception.dart';
 import 'package:phicos_mart/providers/auth.dart';
+import 'package:phicos_mart/screens/product_overview_screen.dart';
 import 'package:provider/provider.dart';
 
 enum AuthMode { Signup, Login }
