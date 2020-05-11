@@ -41,6 +41,10 @@ class ProductsListProvider with ChangeNotifier {
 //    ),
   ];
 
+  final String authToken;
+
+  ProductsListProvider(this.authToken, this._items);
+
   Product findById(String id) {
     return _items.firstWhere(
       (prod) => prod.id == id,
@@ -48,6 +52,7 @@ class ProductsListProvider with ChangeNotifier {
   }
 
 //  var _showFavoritesOnly = false;
+
   List<Product> get items {
 //    if (_showFavoritesOnly) {
 //      return _items.where((prodItem) => prodItem.isFavorite).toList();
@@ -69,7 +74,8 @@ class ProductsListProvider with ChangeNotifier {
 //    notifyListeners();
 //  }
   Future<void> fetchAndSetProducts() async {
-    const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
+    final url =
+        'https://scannen-apps.firebaseio.com/phicosmart/products.json?auth=$authToken';
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -95,7 +101,6 @@ class ProductsListProvider with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) {
-    // todo: ini di errorkan
     const url = 'https://scannen-apps.firebaseio.com/phicosmart/products.json';
     return http
         .post(url,

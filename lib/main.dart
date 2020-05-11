@@ -24,8 +24,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
-        ChangeNotifierProvider.value(
-          value: ProductsListProvider(),
+        ChangeNotifierProxyProvider<Auth, ProductsListProvider>(
+          builder: (ctx, auth, previousProduct) => ProductsListProvider(
+              auth.token, previousProduct == null ? [] : previousProduct.items),
         ),
         ChangeNotifierProvider.value(
           value: Cart(),
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: AuthScreen(),
+          home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
