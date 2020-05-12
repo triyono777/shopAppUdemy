@@ -121,6 +121,7 @@ class ProductsListProvider with ChangeNotifier {
               'description': product.description,
               'imageUrl': product.imageUrl,
               'price': product.price,
+              'creatorId': userID,
             }))
         .then((response) {
       print(jsonDecode(response.body));
