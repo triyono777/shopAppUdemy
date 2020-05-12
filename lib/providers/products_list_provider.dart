@@ -42,8 +42,13 @@ class ProductsListProvider with ChangeNotifier {
   ];
 
   final String authToken;
+  final String userID;
 
-  ProductsListProvider(this.authToken, this._items);
+  ProductsListProvider(
+    this.authToken,
+    this.userID,
+    this._items,
+  );
 
   Product findById(String id) {
     return _items.firstWhere(
@@ -74,7 +79,7 @@ class ProductsListProvider with ChangeNotifier {
 //    notifyListeners();
 //  }
   Future<void> fetchAndSetProducts() async {
-    final url =
+    var url =
         'https://scannen-apps.firebaseio.com/phicosmart/products.json?auth=$authToken';
     try {
       final response = await http.get(url);
@@ -83,15 +88,21 @@ class ProductsListProvider with ChangeNotifier {
       if (extractedData == null) {
         return;
       }
+      url =
+          'https://scannen-apps.firebaseio.com/phicosmart/userFavorites/$userID.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favoriteData = jsonDecode(favoriteResponse.body);
       final List<Product> loadedProduct = [];
       extractedData.forEach((prodId, prodData) {
         loadedProduct.add(Product(
-            id: prodId,
-            title: prodData['title'],
-            description: prodData['description'],
-            imageUrl: prodData['imageUrl'],
-            price: prodData['price'],
-            isFavorite: prodData['isFavorite']));
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          imageUrl: prodData['imageUrl'],
+          price: prodData['price'],
+          isFavorite:
+              favoriteData == null ? false : favoriteData[prodId] ?? false,
+        ));
       });
       _items = loadedProduct;
       notifyListeners();
@@ -110,7 +121,6 @@ class ProductsListProvider with ChangeNotifier {
               'description': product.description,
               'imageUrl': product.imageUrl,
               'price': product.price,
-              'isFavorite': product.isFavorite,
             }))
         .then((response) {
       print(jsonDecode(response.body));
