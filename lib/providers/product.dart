@@ -22,9 +22,9 @@ class Product with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> toggleFavoriteStatus(String token) async {
+  Future<void> toggleFavoriteStatus(String token, String userID) async {
     final url =
-        'https://scannen-apps.firebaseio.com/phicosmart/products/$id.json?auth=$token';
+        'https://scannen-apps.firebaseio.com/phicosmart/userFavorites/$userID/$id.json?auth=$token';
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
