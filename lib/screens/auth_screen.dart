@@ -102,7 +102,7 @@ class _AuthCardState extends State<AuthCard> {
     'password': '',
   };
   var _isLoading = false;
-  final _passwordController = TextEditingController();
+  final _passwordController = TextEditingController(text: 'test1234');
   void _showErrorDialog(String message) {
     showDialog(
         context: context,
@@ -197,6 +197,7 @@ class _AuthCardState extends State<AuthCard> {
             child: Column(
               children: <Widget>[
                 TextFormField(
+                  initialValue: 'test@test.com',
                   decoration: InputDecoration(labelText: 'E-Mail'),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {

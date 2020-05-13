@@ -80,7 +80,8 @@ class ProductsListProvider with ChangeNotifier {
 //  }
   Future<void> fetchAndSetProducts() async {
     var url =
-        'https://scannen-apps.firebaseio.com/phicosmart/products.json?auth=$authToken';
+        'https://scannen-apps.firebaseio.com/phicosmart/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userID"';
+
     try {
       final response = await http.get(url);
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
