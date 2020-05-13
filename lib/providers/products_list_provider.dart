@@ -78,9 +78,11 @@ class ProductsListProvider with ChangeNotifier {
 //    _showFavoritesOnly = false;
 //    notifyListeners();
 //  }
-  Future<void> fetchAndSetProducts() async {
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userID"' : '';
     var url =
-        'https://scannen-apps.firebaseio.com/phicosmart/products.json?auth=$authToken&orderBy="creatorId"&equalTo="$userID"';
+        'https://scannen-apps.firebaseio.com/phicosmart/products.json?auth=$authToken&$filterString';
 
     try {
       final response = await http.get(url);
