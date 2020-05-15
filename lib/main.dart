@@ -7,6 +7,7 @@ import 'package:phicos_mart/screens/edit_product_screen.dart';
 import 'package:phicos_mart/screens/orders_screen.dart';
 import 'package:phicos_mart/screens/product_detail_screen.dart';
 import 'package:phicos_mart/screens/product_overview_screen.dart';
+import 'package:phicos_mart/screens/splash_screen.dart';
 import 'package:phicos_mart/widgets/user_product_item.dart';
 import 'package:provider/provider.dart';
 import './providers/products_list_provider.dart';
@@ -49,7 +50,16 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
           ),
-          home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
+          home: auth.isAuth
+              ? ProductOverviewScreen()
+              : FutureBuilder(
+                  future: auth.tryAutoLogin(),
+                  builder: (ctx, authResultSnapshot) =>
+                      authResultSnapshot.connectionState ==
+                              ConnectionState.waiting
+                          ? SplashScreen()
+                          : AuthScreen(),
+                ),
           routes: {
             ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
             CartScreen.routeName: (ctx) => CartScreen(),
