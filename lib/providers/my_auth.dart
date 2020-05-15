@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:phicos_mart/models/http_exception.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAuth with ChangeNotifier {
   String _token;
@@ -57,6 +58,13 @@ class MyAuth with ChangeNotifier {
       );
       _autoLogout();
       notifyListeners();
+      final prefs = await SharedPreferences.getInstance();
+      final userData = json.encode({
+        'token': _token,
+        'userId': _userId,
+        'expireDate': _expiryDate.toIso8601String(),
+      });
+      prefs.setString('userData', userData);
     } catch (error) {
       throw error;
     }
