@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:phicos_mart/models/http_exception.dart';
-import 'package:phicos_mart/providers/auth.dart';
+import 'package:phicos_mart/providers/my_auth.dart';
 import 'package:phicos_mart/screens/product_overview_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -131,11 +131,11 @@ class _AuthCardState extends State<AuthCard> {
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        await Provider.of<Auth>(context, listen: false)
+        await Provider.of<MyAuth>(context, listen: false)
             .login(_authData['email'], _authData['password']);
       } else {
         // Sign user up
-        await Provider.of<Auth>(context, listen: false).signup(
+        await Provider.of<MyAuth>(context, listen: false).signup(
           _authData['email'],
           _authData['password'],
         );
