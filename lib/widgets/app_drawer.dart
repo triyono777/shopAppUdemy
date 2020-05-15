@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phicos_mart/providers/auth.dart';
+import 'package:phicos_mart/providers/my_auth.dart';
 import 'package:phicos_mart/screens/orders_screen.dart';
 import 'package:phicos_mart/screens/user_products_screen.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +47,7 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pop();
 //              Navigator.of(context)
 //                  .pushReplacementNamed(UserProductsScreen.routeName);
-              Provider.of<Auth>(context, listen: false).logout();
+              Provider.of<MyAuth>(context, listen: false).logout();
             },
           ),
         ],

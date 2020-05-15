@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phicos_mart/providers/auth.dart';
+import 'package:phicos_mart/providers/my_auth.dart';
 import 'package:phicos_mart/providers/cart.dart';
 import 'package:phicos_mart/providers/orders.dart';
 import 'package:phicos_mart/screens/cart_screen.dart';
@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: Auth(),
+          value: MyAuth(),
         ),
-        ChangeNotifierProxyProvider<Auth, ProductsListProvider>(
+        ChangeNotifierProxyProvider<MyAuth, ProductsListProvider>(
           builder: (ctx, auth, previousProduct) => ProductsListProvider(
               auth.token,
               auth.userId,
@@ -33,14 +33,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Cart(),
         ),
-        ChangeNotifierProxyProvider<Auth, Orders>(
+        ChangeNotifierProxyProvider<MyAuth, Orders>(
           builder: (ctx, auth, previousOrders) => Orders(auth.token,
               auth.userId, previousOrders == null ? [] : previousOrders.orders),
         ),
       ],
 
 //      create: (ctx) => ProductsListProvider(),
-      child: Consumer<Auth>(
+      child: Consumer<MyAuth>(
         builder: (ctx, auth, _) => MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',

@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:phicos_mart/models/http_exception.dart';
 
-class Auth with ChangeNotifier {
+class MyAuth with ChangeNotifier {
   String _token;
   DateTime _expiryDate;
   String _userId;
