@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:phicos_mart/providers/product.dart';
 import 'package:phicos_mart/screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -28,8 +29,11 @@ class ProductItem extends StatelessWidget {
               arguments: product.id,
             );
           },
-          child: Image.network(
-            product.imageUrl,
+          child: FadeInImage(
+            placeholder: AssetImage('assets/images/placeholder.png'),
+            image: NetworkImage(
+              product.imageUrl,
+            ),
             fit: BoxFit.cover,
           ),
         ),
