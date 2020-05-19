@@ -18,29 +18,35 @@ class _OrderItemState extends State<OrderItem> {
   bool _expanded = false;
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            title: Text('\$${widget.order.amount}'),
-            subtitle: Text(
-              DateFormat('dd MM yyyy hh:mm').format(widget.order.dateTime),
+    return AnimatedContainer(
+      height:
+          _expanded ? min(widget.order.products.length * 20.0 + 150, 200) : 95,
+      duration: Duration(milliseconds: 300),
+      child: Card(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            ListTile(
+              title: Text('\$${widget.order.amount}'),
+              subtitle: Text(
+                DateFormat('dd MM yyyy hh:mm').format(widget.order.dateTime),
+              ),
+              trailing: IconButton(
+                  icon: _expanded
+                      ? Icon(Icons.expand_less)
+                      : Icon(Icons.expand_more),
+                  onPressed: () {
+                    setState(() {
+                      _expanded = !_expanded;
+                    });
+                  }),
             ),
-            trailing: IconButton(
-                icon: _expanded
-                    ? Icon(Icons.expand_less)
-                    : Icon(Icons.expand_more),
-                onPressed: () {
-                  setState(() {
-                    _expanded = !_expanded;
-                  });
-                }),
-          ),
-          if (_expanded)
-            Container(
+            AnimatedContainer(
+              duration: Duration(milliseconds: 300),
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: min(widget.order.products.length * 20.0 + 10, 100),
+              height: _expanded
+                  ? min(widget.order.products.length * 20.0 + 10, 100)
+                  : 0,
               child: ListView(
                 children: widget.order.products
                     .map((prod) => Row(
@@ -61,7 +67,8 @@ class _OrderItemState extends State<OrderItem> {
                     .toList(),
               ),
             ),
-        ],
+          ],
+        ),
       ),
     );
   }
