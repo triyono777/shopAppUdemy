@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:phicos_mart/helpers/custom_route.dart';
 import 'package:phicos_mart/providers/my_auth.dart';
 import 'package:phicos_mart/providers/cart.dart';
 import 'package:phicos_mart/providers/orders.dart';
@@ -49,6 +52,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.purple,
             accentColor: Colors.deepOrange,
             fontFamily: 'Lato',
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CustomPageTransitionBuilder(),
+              TargetPlatform.iOS: CustomPageTransitionBuilder(),
+            }),
           ),
           home: auth.isAuth
               ? ProductOverviewScreen()
